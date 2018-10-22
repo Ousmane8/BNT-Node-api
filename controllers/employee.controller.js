@@ -112,7 +112,7 @@ exports.update = (req, res) => {
 
 // Delete a user with the specified userid in the request
 exports.delete = (req, res) => {
-    User.findByIdAndRemove(req.params.id)
+    Employee.findByIdAndRemove(req.params.id)
     .then(employee => {
         if(!employee) {
             return res.status(404).send({

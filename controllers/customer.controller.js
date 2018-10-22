@@ -1,4 +1,4 @@
-const Custumer = require('../models/customer.model.js');
+const Customer = require('../models/customer.model.js');
 
 // Create and Save a new user
 exports.create = (req, res) => {
@@ -9,7 +9,7 @@ exports.create = (req, res) => {
         });
     }
     // Create a user
-    const customer = new Custumer({
+    const customer = new Customer({
         nameent: req.body.nameent || "Untitled User",
         address: req.body.address,
         city: req.body.city,
@@ -34,7 +34,7 @@ exports.create = (req, res) => {
 // Retrieve and return all User from the database.
 exports.findAll = (req, res) => {
 
-    Custumer.find()
+    Customer.find()
     .then(customers => {
         res.send(customers);
     }).catch(err => {
@@ -46,7 +46,7 @@ exports.findAll = (req, res) => {
 
 // Find a single user with a userid
 exports.findOne = (req, res) => {
-    Custumer.findById(req.params.id)
+    Customer.findById(req.params.id)
    .then(customer => {
        if(!customer) {
            return res.status(404).send({
@@ -77,7 +77,7 @@ exports.update = (req, res) => {
     }
 
     // Find user and update it with the request body
-    Custumer.findByIdAndUpdate(req.params.id, {
+    Customer.findByIdAndUpdate(req.params.id, {
         nameent: req.body.nameent || "Untitled User",
         address: req.body.address,
         city: req.body.city,
