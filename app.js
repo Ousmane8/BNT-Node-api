@@ -34,6 +34,7 @@ mongoose.connect(dbConfig.url, {
 });
 
 // imports des routes
+require('./routes/projects.route.js')(app);
 require('./routes/employees.route.js')(app);
 require('./routes/customers.route.js')(app);
 
