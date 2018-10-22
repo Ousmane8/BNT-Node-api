@@ -1,4 +1,4 @@
-const User = require('../models/user.model.js');
+const Employee = require('../models/employee.model.js');
 
 // Create and Save a new user
 exports.create = (req, res) => {
@@ -9,13 +9,20 @@ exports.create = (req, res) => {
         });
     }
     // Create a user
-    const user = new User({
+    const employee = new Employee({
         name: req.body.name || "Untitled User",
+        firstname: req.body.firstname,
         username: req.body.username,
-        website:req.body.website
+        birthday: req.body.birthday,
+        address: req.body.address,
+        city: req.body.city,
+        zipcode: req.body.zipcode,
+        phone: req.body.phone,
+        email: req.body.email,
+        post: req.body.post
     });
     // Save user in the database
-    user.save()
+    employee.save()
     .then(data => {
         res.send(data);
     }).catch(err => {
@@ -28,9 +35,9 @@ exports.create = (req, res) => {
 // Retrieve and return all User from the database.
 exports.findAll = (req, res) => {
 
-    User.find()
-    .then(users => {
-        res.send(users);
+    Employee.find()
+    .then(employees => {
+        res.send(employees);
     }).catch(err => {
         res.status(500).send({
             message: err.message || "Some error occurred while retrieving users."
@@ -40,14 +47,14 @@ exports.findAll = (req, res) => {
 
 // Find a single user with a userid
 exports.findOne = (req, res) => {
-    User.findById(req.params.id)
-   .then(user => {
-       if(!user) {
+    Employee.findById(req.params.id)
+   .then(employee => {
+       if(!employee) {
            return res.status(404).send({
                message: "user not found with id " + req.params.id
            });
        }
-       res.send(user);
+       res.send(employee);
    }).catch(err => {
        if(err.kind === 'ObjectId') {
            return res.status(404).send({
@@ -71,18 +78,25 @@ exports.update = (req, res) => {
     }
 
     // Find user and update it with the request body
-    User.findByIdAndUpdate(req.params.id, {
+    Employee.findByIdAndUpdate(req.params.id, {
         name: req.body.name || "Untitled User",
+        firstname: req.body.firstname,
         username: req.body.username,
-        website:req.body.website
+        birthday: req.body.birthday,
+        address: req.body.address,
+        city: req.body.city,
+        zipcode: req.body.zipcode,
+        phone: req.body.phone,
+        email: req.body.email,
+        post: req.body.post
     }, {new: true})
-    .then(user => {
-        if(!user) {
+    .then(employee => {
+        if(!employee) {
             return res.status(404).send({
                 message: "User not found with id " + req.params.id
             });
         }
-        res.send(user);
+        res.send(employee);
     }).catch(err => {
         if(err.kind === 'id') {
             return res.status(404).send({
@@ -99,8 +113,8 @@ exports.update = (req, res) => {
 // Delete a user with the specified userid in the request
 exports.delete = (req, res) => {
     User.findByIdAndRemove(req.params.id)
-    .then(user => {
-        if(!user) {
+    .then(employee => {
+        if(!employee) {
             return res.status(404).send({
                 message: "User not found with id " + req.params.id
             });
